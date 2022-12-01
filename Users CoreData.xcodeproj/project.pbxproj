@@ -18,6 +18,7 @@
 		C54095D5293954D300D36F76 /* DetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54095D4293954D200D36F76 /* DetailPresenter.swift */; };
 		C54095D82939555E00D36F76 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54095D72939555E00D36F76 /* Router.swift */; };
 		C54095DA2939556D00D36F76 /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54095D92939556D00D36F76 /* ModuleBuilder.swift */; };
+		C54095DE2939577B00D36F76 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54095DD2939577B00D36F76 /* CoreDataService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		C54095D4293954D200D36F76 /* DetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPresenter.swift; sourceTree = "<group>"; };
 		C54095D72939555E00D36F76 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		C54095D92939556D00D36F76 /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
+		C54095DD2939577B00D36F76 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +79,7 @@
 			children = (
 				C54095C929394EF100D36F76 /* App */,
 				C54095D62939554400D36F76 /* Helpers */,
-				C54095DB293955A100D36F76 /* Core Data */,
+				C54095DC2939575400D36F76 /* Services */,
 				C54095CD2939534200D36F76 /* Modules */,
 			);
 			path = Sources;
@@ -86,6 +88,7 @@
 		C54095C829394E8D00D36F76 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C54095B929394C9E00D36F76 /* Users_CoreData.xcdatamodeld */,
 				C54095BC29394CA000D36F76 /* Assets.xcassets */,
 				C54095C129394CA000D36F76 /* Info.plist */,
 			);
@@ -137,12 +140,12 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		C54095DB293955A100D36F76 /* Core Data */ = {
+		C54095DC2939575400D36F76 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				C54095B929394C9E00D36F76 /* Users_CoreData.xcdatamodeld */,
+				C54095DD2939577B00D36F76 /* CoreDataService.swift */,
 			);
-			path = "Core Data";
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -222,6 +225,7 @@
 			files = (
 				C54095D82939555E00D36F76 /* Router.swift in Sources */,
 				C54095B529394C9E00D36F76 /* MainViewController.swift in Sources */,
+				C54095DE2939577B00D36F76 /* CoreDataService.swift in Sources */,
 				C54095D12939540400D36F76 /* MainPresenter.swift in Sources */,
 				C54095B129394C9E00D36F76 /* AppDelegate.swift in Sources */,
 				C54095D3293954B700D36F76 /* DetailViewController.swift in Sources */,
