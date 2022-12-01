@@ -12,7 +12,6 @@
 		C54095B529394C9E00D36F76 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54095B429394C9E00D36F76 /* ViewController.swift */; };
 		C54095BB29394C9E00D36F76 /* Users_CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C54095B929394C9E00D36F76 /* Users_CoreData.xcdatamodeld */; };
 		C54095BD29394CA000D36F76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C54095BC29394CA000D36F76 /* Assets.xcassets */; };
-		C54095C029394CA000D36F76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C54095BE29394CA000D36F76 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,7 +21,6 @@
 		C54095B429394C9E00D36F76 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C54095BA29394C9E00D36F76 /* Users_CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Users_CoreData.xcdatamodel; sourceTree = "<group>"; };
 		C54095BC29394CA000D36F76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C54095BF29394CA000D36F76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C54095C129394CA000D36F76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -67,7 +65,6 @@
 			children = (
 				C54095C929394EF100D36F76 /* App */,
 				C54095B429394C9E00D36F76 /* ViewController.swift */,
-				C54095BE29394CA000D36F76 /* LaunchScreen.storyboard */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -149,7 +146,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C54095C029394CA000D36F76 /* LaunchScreen.storyboard in Resources */,
 				C54095BD29394CA000D36F76 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -169,17 +165,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		C54095BE29394CA000D36F76 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C54095BF29394CA000D36F76 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C54095C229394CA000D36F76 /* Debug */ = {
