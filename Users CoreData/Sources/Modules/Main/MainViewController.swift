@@ -8,10 +8,27 @@
 import UIKit
 
 class MainViewController: UIViewController {
+	
+	// MARK: - Outlets
+	
+	// MARK: - Lifecycle
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = .red
+		
+		setupHierarchy()
+		setupLayout()
+	}
+	
+	// MARK: - Setup
+
+	private func setupHierarchy() {
+		
+	}
+
+	private func setupLayout() {
+
 	}
 }
 
