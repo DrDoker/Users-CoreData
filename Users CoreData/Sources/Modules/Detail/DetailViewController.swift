@@ -9,8 +9,42 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+	// MARK: - Outlets
+	
+	
+	// MARK: - Lifecycle
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		setupView() 
+		setupNavBar()
+		setupHierarchy()
+		setupLayout()
+	}
+	
+	// MARK: - Setup
+	
+	private func setupView() {
+		view.backgroundColor = .systemBackground
+	}
+	
+	private func setupNavBar() {
+		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editTapped))
+	}
+	
+	private func setupHierarchy() {
+		
+	}
+	
+	private func setupLayout() {
+		
+	}
+	
+	// MARK: - Actions
+
+	@objc func editTapped() {
+		
+	}
     
 }
