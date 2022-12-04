@@ -32,11 +32,19 @@ class MainViewController: UIViewController {
 		return button
 	}()
 	
+	lazy var usersTable: UITableView = {
+		let table = UITableView(frame: .zero, style: .insetGrouped)
+		table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+		table.delegate = self
+		table.dataSource = self
+		return table
+	}()
+	
 	// MARK: - Lifecycle
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.backgroundColor = .white
+		view.backgroundColor = .systemBackground
 		
 		setupNavBar()
 		setupHierarchy()
@@ -48,6 +56,7 @@ class MainViewController: UIViewController {
 	private func setupHierarchy() {
 		view.addSubview(addUserTextField)
 		view.addSubview(addUserButton)
+		view.addSubview(usersTable)
 	}
 
 	private func setupLayout() {
@@ -55,15 +64,21 @@ class MainViewController: UIViewController {
 			make.top.equalTo(view).offset(150)
 			make.left.equalTo(view).offset(16)
 			make.right.equalTo(view).offset(-16)
-			make.height.equalTo(55)
+			make.height.equalTo(50)
 		}
 		
 		addUserButton.snp.makeConstraints { make in
 			make.top.equalTo(addUserTextField.snp.bottom).offset(20)
 			make.left.equalTo(view).offset(16)
 			make.right.equalTo(view).offset(-16)
-			make.height.equalTo(55)
+			make.height.equalTo(50)
 			
+		}
+		
+		usersTable.snp.makeConstraints { make in
+			make.top.equalTo(addUserButton.snp.bottom).offset(30)
+			make.left.right.equalTo(view)
+			make.bottom.equalTo(view)
 		}
 	}
 	
@@ -73,3 +88,25 @@ class MainViewController: UIViewController {
 	}
 }
 
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		10
+	}
+	
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		45
+	}
+	
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+		cell.accessoryType = .disclosureIndicator
+		cell.textLabel?.text = "User"
+		return cell
+	}
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
+		navigationController?.pushViewController(DetailViewController(), animated: true)
+	}
+	
+}
