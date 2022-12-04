@@ -11,6 +11,9 @@ class DetailViewController: UIViewController {
 
 	// MARK: - Outlets
 	
+	// MARK: - Private properties
+	
+	var presenter: DetailPresenterProtocol?
 	
 	// MARK: - Lifecycle
 	
@@ -47,4 +50,10 @@ class DetailViewController: UIViewController {
 		
 	}
     
+}
+
+// MARK: - Extensions
+
+extension DetailViewController: DetailViewProtocol {
+
 }

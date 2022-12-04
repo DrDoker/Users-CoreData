@@ -10,6 +10,10 @@ import SnapKit
 
 class MainViewController: UIViewController {
 	
+	// MARK: - Private properties
+	
+	var presenter: MainPresenterProtocol?
+	
 	// MARK: - Outlets
 	
 	lazy var addUserTextField: UITextField = {
@@ -88,6 +92,12 @@ class MainViewController: UIViewController {
 	}
 }
 
+// MARK: - Extensions
+
+extension MainViewController: MainViewProtocol {
+
+}
+
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		10
@@ -106,7 +116,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		navigationController?.pushViewController(DetailViewController(), animated: true)
+		presenter?.showDetail()
 	}
 	
 }
