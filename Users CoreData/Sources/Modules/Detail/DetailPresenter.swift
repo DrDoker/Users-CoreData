@@ -7,4 +7,21 @@
 
 import Foundation
 
+protocol DetailViewProtocol: AnyObject {
+	
+}
 
+protocol DetailPresenterProtocol: AnyObject {
+
+}
+
+class DetailPresenter: DetailPresenterProtocol {
+	weak var view: DetailViewProtocol?
+	var router: RouterProtocol?
+
+	required init(view: DetailViewProtocol, router: RouterProtocol) {
+		self.view = view
+		self.router = router
+	}
+
+}
