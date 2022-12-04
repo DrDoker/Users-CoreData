@@ -12,6 +12,10 @@ class DetailViewController: UIViewController {
 	// MARK: - Properties
 	
 	var presenter: DetailPresenterProtocol?
+	
+	private var isEditEnabled = false
+	private let dateFormatter = DateFormatter()
+	private let datePicker = UIDatePicker()
 	private var genders = ["Male", "Female", "Other"]
 
 	// MARK: - Outlets
@@ -23,74 +27,42 @@ class DetailViewController: UIViewController {
 		return imageView
 	}()
 	
-	lazy var nameIcon: UIImageView = {
-		let imageView = UIImageView()
-		imageView.image = UIImage(systemName: "person.crop.circle")
-		return imageView
-	}()
+	lazy var nameView: InfoView = {
+		let view = InfoView()
+		view.icon.image = UIImage(systemName: "person.crop.circle")
+		view.textField.text = presenter?.getName()
+		return view
+	 }()
 	
-	lazy var dateOfBirthIcon: UIImageView = {
-		let imageView = UIImageView()
-		imageView.image = UIImage(systemName: "calendar")
-		return imageView
-	}()
-	
-	lazy var genderIcon: UIImageView = {
-		let imageView = UIImageView()
-		imageView.image = UIImage(systemName: "person.3.fill")
-		imageView.contentMode = .scaleAspectFit
-		return imageView
-	}()
-	
-	lazy var nameLabel: UILabel = {
-		let label = UILabel()
-		label.text = presenter?.getName()
-		return label
-	}()
-	
-	lazy var nameTextField: UITextField = {
-		let textField = UITextField()
-		textField.backgroundColor = .systemGray6
-		textField.layer.cornerRadius = 14
-		textField.textAlignment = .center
+	lazy var dateOfBirthView: InfoView = {
+		let view = InfoView()
+		view.icon.image = UIImage(systemName: "calendar")
+		view.textField.placeholder = "Data Of Birth"
 		
-		return textField
-	}()
-	
-	lazy var dateOfBirthTextField: UITextField = {
-		let textField = UITextField()
-		textField.backgroundColor = .systemGray6
-		textField.layer.cornerRadius = 14
-		textField.textAlignment = .left
+		let toolbar = UIToolbar()
+		toolbar.sizeToFit()
+		let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneTapped))
+		toolbar.setItems([doneButton], animated: true)
+		view.textField.inputAccessoryView = toolbar
 		
-		return textField
-	}()
+		datePicker.preferredDatePickerStyle = .wheels
+		datePicker.maximumDate = Date()
+		datePicker.datePickerMode = .date
+		view.textField.inputView = datePicker
+		return view
+	 }()
 	
-	lazy var genderTextField: UITextField = {
-		let textField = UITextField()
-		textField.backgroundColor = .systemGray6
-		textField.layer.cornerRadius = 14
-		textField.textAlignment = .left
+	lazy var genderView: InfoView = {
+		let view = InfoView()
+		view.icon.image = UIImage(systemName: "person.3.fill")
+		view.textField.placeholder = "Gender"
 		
 		let genderPicker = UIPickerView()
 		genderPicker.delegate = self
 		genderPicker.dataSource = self
-		textField.inputView = genderPicker
-		return textField
-	}()
-	
-	lazy var lineView: UIView = {
-		let view = UIView()
-		view.backgroundColor = .red
+		view.textField.inputView = genderPicker
 		return view
-	}()
-	
-	lazy var genderStack: UIStackView = {
-		let stack = UIStackView()
-		stack.axis = .horizontal
-		stack.spacing = 20
-		return stack
-	}()
+	 }()
 	
 	// MARK: - Lifecycle
 	
@@ -115,12 +87,9 @@ class DetailViewController: UIViewController {
 	
 	private func setupHierarchy() {
 		view.addSubview(userImage)
-		view.addSubview(nameLabel)
-		view.addSubview(genderStack)
-		
-		genderStack.addArrangedSubview(genderIcon)
-		genderStack.addArrangedSubview(genderTextField)
-		
+		view.addSubview(nameView)
+		view.addSubview(dateOfBirthView)
+		view.addSubview(genderView)
 	}
 	
 	private func setupLayout() {
@@ -131,40 +100,68 @@ class DetailViewController: UIViewController {
 			make.height.width.equalTo(150)
 		}
 		
-		nameLabel.snp.makeConstraints { make in
-			make.top.equalTo(userImage.snp.bottom).offset(30)
-			make.centerX.equalTo(view)
+		nameView.snp.makeConstraints { make in
+			make.top.equalTo(userImage.snp.bottom).offset(50)
+			make.left.equalTo(view).offset(20)
+			make.right.equalTo(view).offset(-20)
 		}
 		
-		genderStack.snp.makeConstraints { make in
-			make.top.equalTo(nameLabel.snp.bottom).offset(30)
-			make.left.equalTo(view).offset(30)
-			make.right.equalTo(view).offset(-30)
-			make.height.equalTo(50)
+		dateOfBirthView.snp.makeConstraints { make in
+			make.top.equalTo(nameView.snp.bottom).offset(14)
+			make.left.equalTo(view).offset(20)
+			make.right.equalTo(view).offset(-20)
 		}
 		
-		genderIcon.snp.makeConstraints { make in
-			make.height.width.equalTo(35)
+		genderView.snp.makeConstraints { make in
+			make.top.equalTo(dateOfBirthView.snp.bottom).offset(14)
+			make.left.equalTo(view).offset(20)
+			make.right.equalTo(view).offset(-20)
 		}
-		
-		lineView.snp.makeConstraints { make in
-			make.height.equalTo(5)
+	}
+	
+	func editIsEnabled() {
+		if isEditEnabled {
+			navigationItem.rightBarButtonItem?.title = "Save"
+			navigationItem.rightBarButtonItem?.tintColor = .systemGreen
+			nameView.textField.isEnabled = true
+			dateOfBirthView.textField.isEnabled = true
+			genderView.textField.isEnabled = true
+			nameView.textField.backgroundColor = .systemGray6
+			dateOfBirthView.textField.backgroundColor = .systemGray6
+			genderView.textField.backgroundColor = .systemGray6
+		} else {
+			navigationItem.rightBarButtonItem?.title = "Edit"
+			navigationItem.rightBarButtonItem?.tintColor = .systemBlue
+			nameView.textField.isEnabled = false
+			dateOfBirthView.textField.isEnabled = false
+			genderView.textField.isEnabled = false
+			nameView.textField.backgroundColor = .systemBackground
+			dateOfBirthView.textField.backgroundColor = .systemBackground
+			genderView.textField.backgroundColor = .systemBackground
 		}
 	}
 	
 	// MARK: - Actions
 
 	@objc func editTapped() {
-		
+		isEditEnabled.toggle()
+		editIsEnabled()
 	}
-    
+	
+	@objc func doneTapped() {
+		dateFormatter.dateFormat = "dd.MM.yyyy"
+		dateOfBirthView.textField.text = dateFormatter.string(from: datePicker.date)
+		self.view.endEditing(true)
+	}
 }
 
-// MARK: - Extensions
+// MARK: - Extensions DetailViewProtocol
 
 extension DetailViewController: DetailViewProtocol {
 
 }
+
+// MARK: - Extensions genderPicker
 
 extension DetailViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 	func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -180,10 +177,7 @@ extension DetailViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 	}
 
 	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-		genderTextField.text = genders[row]
-		genderTextField.resignFirstResponder()
-		genderTextField.isEnabled = false
-		genderTextField.backgroundColor = .systemBackground
+		genderView.textField.text = genders[row]
+		genderView.textField.resignFirstResponder()
 	}
-	
 }
