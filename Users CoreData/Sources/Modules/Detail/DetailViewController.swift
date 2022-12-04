@@ -8,12 +8,18 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+	
+	// MARK: - Properties
+	
+	var presenter: DetailPresenterProtocol?
 
 	// MARK: - Outlets
 	
-	// MARK: - Private properties
-	
-	var presenter: DetailPresenterProtocol?
+	lazy var nameLabel: UILabel = {
+		let label = UILabel()
+		label.text = presenter?.getName()
+		return label
+	}()
 	
 	// MARK: - Lifecycle
 	
@@ -37,11 +43,13 @@ class DetailViewController: UIViewController {
 	}
 	
 	private func setupHierarchy() {
-		
+		view.addSubview(nameLabel)
 	}
 	
 	private func setupLayout() {
-		
+		nameLabel.snp.makeConstraints { make in
+			make.center.equalTo(view)
+		}
 	}
 	
 	// MARK: - Actions

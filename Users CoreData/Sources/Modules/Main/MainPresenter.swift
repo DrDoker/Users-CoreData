@@ -8,14 +8,21 @@
 import Foundation
 
 protocol MainViewProtocol: AnyObject {
-	
+	func reloadTable()
 }
 
 protocol MainPresenterProtocol: AnyObject {
-	func showDetail()
+	func fetchUsers()
+	func numberOfUsers() -> Int
+	func addUser(withName name: String)
+	func getName(for index: IndexPath) -> String
+	func showDetail(forUser index: IndexPath)
+	func deleteUser(by index: IndexPath)
+	func deleteAllUsers()
 }
 
 class MainPresenter: MainPresenterProtocol {
+	var users: [User]?
 	weak var view: MainViewProtocol?
 	var router: RouterProtocol?
 
@@ -24,8 +31,37 @@ class MainPresenter: MainPresenterProtocol {
 		self.router = router
 	}
 	
-	func showDetail() {
-		router?.showDetail()
+	func fetchUsers() {
+		users = CoreDataService.shared.fetchUsers()
+		view?.reloadTable()
+	}
+	
+	func numberOfUsers() -> Int {
+		return users?.count ?? 0
+	}
+	
+	func addUser(withName name: String) {
+		CoreDataService.shared.addUser(withName: name)
+		fetchUsers()
 	}
 
+	func getName(for index: IndexPath) -> String {
+		return users?[index.row].name ?? ""
+	}
+	
+	func showDetail(forUser index: IndexPath) {
+		guard let user = users?[index.row] else { return }
+		router?.showDetail(user: user)
+	}
+	
+	func deleteUser(by index: IndexPath) {
+		guard let user = users?[index.row] else { return }
+		CoreDataService.shared.delete(user: user)
+		fetchUsers()
+	}
+	
+	func deleteAllUsers() {
+		CoreDataService.shared.deleteAllUsers()
+		fetchUsers()
+	}
 }
