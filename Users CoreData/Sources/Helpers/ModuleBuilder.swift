@@ -9,7 +9,7 @@ import UIKit
 
 protocol BuilderProtocol {
 	func createMainModule(router: RouterProtocol) -> UIViewController
-	func createDetailModule(router: RouterProtocol) -> UIViewController
+	func createDetailModule(user: User, router: RouterProtocol) -> UIViewController
 }
 
 class ModuleBuilder: BuilderProtocol {
@@ -21,9 +21,9 @@ class ModuleBuilder: BuilderProtocol {
 		return view
 	}
 	
-	func createDetailModule(router: RouterProtocol) -> UIViewController {
+	func createDetailModule(user: User, router: RouterProtocol) -> UIViewController {
 		let view = DetailViewController()
-		let presenter = DetailPresenter(view: view, router: router)
+		let presenter = DetailPresenter(user: user, view: view, router: router)
 		view.presenter = presenter
 		return view
 	}

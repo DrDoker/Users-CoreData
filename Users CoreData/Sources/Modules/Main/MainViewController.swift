@@ -32,7 +32,7 @@ class MainViewController: UIViewController {
 		button.tintColor = .white
 		button.backgroundColor = .systemBlue
 		button.layer.cornerRadius = 14
-		
+		button.addTarget(self, action: #selector(addUser), for: .touchUpInside)
 		return button
 	}()
 	
@@ -53,6 +53,7 @@ class MainViewController: UIViewController {
 		setupNavBar()
 		setupHierarchy()
 		setupLayout()
+		presenter?.fetchUsers()
 	}
 	
 	// MARK: - Setup
@@ -89,18 +90,34 @@ class MainViewController: UIViewController {
 	private func setupNavBar() {
 		title = "Users"
 		navigationController?.navigationBar.prefersLargeTitles = true
+		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deletAllUsers))
+	}
+	
+	// MARK: - Actions
+	
+	@objc func addUser() {
+		if let userName = addUserTextField.text, userName != "" {
+			presenter?.addUser(withName: userName)
+			addUserTextField.text = ""
+		}
+	}
+	
+	@objc func deletAllUsers() {
+		presenter?.deletAllUsers()
 	}
 }
 
 // MARK: - Extensions
 
 extension MainViewController: MainViewProtocol {
-
+	func reloadTable() {
+		usersTable.reloadData()
+	}
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		10
+		presenter?.numberOfUsers() ?? 0
 	}
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -110,13 +127,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
 		cell.accessoryType = .disclosureIndicator
-		cell.textLabel?.text = "User"
+		cell.textLabel?.text = presenter?.getName(for: indexPath)
 		return cell
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		presenter?.showDetail()
+		presenter?.showDetail(forUser: indexPath)
 	}
 	
 }

@@ -14,7 +14,7 @@ protocol RouterMain {
 
 protocol RouterProtocol: RouterMain {
 	func initialViewController()
-	func showDetail()
+	func showDetail(user: User)
 }
 
 class Router: RouterProtocol {
@@ -33,9 +33,9 @@ class Router: RouterProtocol {
 		}
 	}
 	
-	func showDetail() {
+	func showDetail(user: User) {
 		if let navigationController = navigationController {
-			guard let detailViewController = assemblyBuilder?.createDetailModule(router: self) else { return }
+			guard let detailViewController = assemblyBuilder?.createDetailModule(user: user, router: self) else { return }
 			navigationController.pushViewController(detailViewController, animated: true)
 		}
 	}

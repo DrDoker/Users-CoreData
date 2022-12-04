@@ -12,16 +12,22 @@ protocol DetailViewProtocol: AnyObject {
 }
 
 protocol DetailPresenterProtocol: AnyObject {
-
+	func getName() -> String
 }
 
 class DetailPresenter: DetailPresenterProtocol {
+	var user: User
 	weak var view: DetailViewProtocol?
 	var router: RouterProtocol?
 
-	required init(view: DetailViewProtocol, router: RouterProtocol) {
+	required init(user: User, view: DetailViewProtocol, router: RouterProtocol) {
+		self.user = user
 		self.view = view
 		self.router = router
+	}
+	
+	func getName() -> String {
+		return user.name ?? ""
 	}
 
 }
