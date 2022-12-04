@@ -90,7 +90,7 @@ class MainViewController: UIViewController {
 	private func setupNavBar() {
 		title = "Users"
 		navigationController?.navigationBar.prefersLargeTitles = true
-		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deletAllUsers))
+		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteAllUsers))
 	}
 	
 	// MARK: - Actions
@@ -102,8 +102,8 @@ class MainViewController: UIViewController {
 		}
 	}
 	
-	@objc func deletAllUsers() {
-		presenter?.deletAllUsers()
+	@objc func deleteAllUsers() {
+		presenter?.deleteAllUsers()
 	}
 }
 
@@ -136,4 +136,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 		presenter?.showDetail(forUser: indexPath)
 	}
 	
+	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+		if editingStyle == .delete {
+			presenter?.deleteUser(by: indexPath)
+		}
+	}
 }

@@ -17,7 +17,8 @@ protocol MainPresenterProtocol: AnyObject {
 	func addUser(withName name: String)
 	func getName(for index: IndexPath) -> String
 	func showDetail(forUser index: IndexPath)
-	func deletAllUsers()
+	func deleteUser(by index: IndexPath)
+	func deleteAllUsers()
 }
 
 class MainPresenter: MainPresenterProtocol {
@@ -53,8 +54,14 @@ class MainPresenter: MainPresenterProtocol {
 		router?.showDetail(user: user)
 	}
 	
-	func deletAllUsers() {
-		CoreDataService.shared.deletAllUsers()
+	func deleteUser(by index: IndexPath) {
+		guard let user = users?[index.row] else { return }
+		CoreDataService.shared.delete(user: user)
+		fetchUsers()
+	}
+	
+	func deleteAllUsers() {
+		CoreDataService.shared.deleteAllUsers()
 		fetchUsers()
 	}
 }
