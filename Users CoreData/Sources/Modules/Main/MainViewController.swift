@@ -10,7 +10,7 @@ import SnapKit
 
 class MainViewController: UIViewController {
 	
-	// MARK: - Private properties
+	// MARK: - Properties
 	
 	var presenter: MainPresenterProtocol?
 	
