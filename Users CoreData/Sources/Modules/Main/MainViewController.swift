@@ -90,7 +90,6 @@ class MainViewController: UIViewController {
 	private func setupNavBar() {
 		title = "Users"
 		navigationController?.navigationBar.prefersLargeTitles = true
-		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteAllUsers))
 	}
 	
 	// MARK: - Actions
@@ -100,10 +99,6 @@ class MainViewController: UIViewController {
 			presenter?.addUser(withName: userName)
 			addUserTextField.text = ""
 		}
-	}
-	
-	@objc func deleteAllUsers() {
-		presenter?.deleteAllUsers()
 	}
 }
 

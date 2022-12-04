@@ -69,16 +69,4 @@ class CoreDataService {
 		persistentContainer.viewContext.delete(user)
 		saveContext()
 	}
-	
-	func deleteAllUsers() {
-		let context = persistentContainer.viewContext
-		let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
-		
-		if let tasks = try? context.fetch(fetchRequest) {
-			tasks.forEach { task in
-				context.delete(task)
-			}
-			saveContext()
-		}
-	}
 }
