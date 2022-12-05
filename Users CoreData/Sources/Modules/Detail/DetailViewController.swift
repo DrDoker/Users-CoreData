@@ -108,7 +108,6 @@ class DetailViewController: UIViewController {
 		view.addSubview(nameView)
 		view.addSubview(dateOfBirthView)
 		view.addSubview(genderView)
-		
 	}
 	
 	private func setupLayout() {
@@ -143,8 +142,6 @@ class DetailViewController: UIViewController {
 			make.left.equalTo(view).offset(20)
 			make.right.equalTo(view).offset(-20)
 		}
-		
-
 	}
 	
 	func editIsEnabled() {
