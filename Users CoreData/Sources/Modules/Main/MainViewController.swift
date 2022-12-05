@@ -45,6 +45,10 @@ class MainViewController: UIViewController {
 	}()
 	
 	// MARK: - Lifecycle
+	
+	override func viewWillAppear(_ animated: Bool) {
+		reloadTable()
+	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()

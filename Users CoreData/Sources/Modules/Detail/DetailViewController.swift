@@ -30,7 +30,7 @@ class DetailViewController: UIViewController {
 	lazy var nameView: InfoView = {
 		let view = InfoView()
 		view.icon.image = UIImage(systemName: "person.crop.circle")
-		view.textField.text = presenter?.getName()
+		view.textField.placeholder = "Name"
 		return view
 	 }()
 	
@@ -73,6 +73,7 @@ class DetailViewController: UIViewController {
 		setupNavBar()
 		setupHierarchy()
 		setupLayout()
+		presenter?.setData()
 	}
 	
 	// MARK: - Setup
@@ -123,18 +124,22 @@ class DetailViewController: UIViewController {
 		if isEditEnabled {
 			navigationItem.rightBarButtonItem?.title = "Save"
 			navigationItem.rightBarButtonItem?.tintColor = .systemGreen
+			
 			nameView.textField.isEnabled = true
 			dateOfBirthView.textField.isEnabled = true
 			genderView.textField.isEnabled = true
+			
 			nameView.textField.backgroundColor = .systemGray6
 			dateOfBirthView.textField.backgroundColor = .systemGray6
 			genderView.textField.backgroundColor = .systemGray6
 		} else {
 			navigationItem.rightBarButtonItem?.title = "Edit"
 			navigationItem.rightBarButtonItem?.tintColor = .systemBlue
+			
 			nameView.textField.isEnabled = false
 			dateOfBirthView.textField.isEnabled = false
 			genderView.textField.isEnabled = false
+			
 			nameView.textField.backgroundColor = .systemBackground
 			dateOfBirthView.textField.backgroundColor = .systemBackground
 			genderView.textField.backgroundColor = .systemBackground
@@ -146,6 +151,15 @@ class DetailViewController: UIViewController {
 	@objc func editTapped() {
 		isEditEnabled.toggle()
 		editIsEnabled()
+		
+		if !isEditEnabled {
+			let name = nameView.textField.text
+			dateFormatter.dateFormat = "dd.MM.yyyy"
+			let dateOfBirth = dateFormatter.date(from: dateOfBirthView.textField.text ?? "")
+			let gender = genderView.textField.text
+			
+			presenter?.updateData(name: name, dateOfBirth: dateOfBirth, gender: gender, image: nil)
+		}
 	}
 	
 	@objc func doneTapped() {
@@ -158,7 +172,14 @@ class DetailViewController: UIViewController {
 // MARK: - Extensions DetailViewProtocol
 
 extension DetailViewController: DetailViewProtocol {
-
+	func setupDetailedView(name: String?, dateOfBirth: Date?, gender: String?, image: Data?) {
+		nameView.textField.text = name
+		if let date = dateOfBirth {
+			dateFormatter.dateFormat = "dd.MM.yyyy"
+			dateOfBirthView.textField.text = dateFormatter.string(from: date)
+		}
+		genderView.textField.text = gender
+	}
 }
 
 // MARK: - Extensions genderPicker
