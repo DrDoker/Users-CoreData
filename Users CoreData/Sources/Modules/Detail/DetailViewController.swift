@@ -13,10 +13,10 @@ class DetailViewController: UIViewController {
 	
 	var presenter: DetailPresenterProtocol?
 	
-	private var isEditEnabled = false
-	private let dateFormatter = DateFormatter()
-	private let datePicker = UIDatePicker()
 	private var genders = ["Male", "Female", "Other"]
+	private var isEditEnabled = false
+	private let datePicker = UIDatePicker()
+	private let dateFormatter = DateFormatter()
 
 	// MARK: - Outlets
 	
@@ -69,6 +69,7 @@ class DetailViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		dateFormatter.dateFormat = "dd.MM.yyyy"
 		setupView() 
 		setupNavBar()
 		setupHierarchy()
@@ -154,7 +155,6 @@ class DetailViewController: UIViewController {
 		
 		if !isEditEnabled {
 			let name = nameView.textField.text
-			dateFormatter.dateFormat = "dd.MM.yyyy"
 			let dateOfBirth = dateFormatter.date(from: dateOfBirthView.textField.text ?? "")
 			let gender = genderView.textField.text
 			
@@ -163,7 +163,6 @@ class DetailViewController: UIViewController {
 	}
 	
 	@objc func doneTapped() {
-		dateFormatter.dateFormat = "dd.MM.yyyy"
 		dateOfBirthView.textField.text = dateFormatter.string(from: datePicker.date)
 		self.view.endEditing(true)
 	}
@@ -175,7 +174,6 @@ extension DetailViewController: DetailViewProtocol {
 	func setupDetailedView(name: String?, dateOfBirth: Date?, gender: String?, image: Data?) {
 		nameView.textField.text = name
 		if let date = dateOfBirth {
-			dateFormatter.dateFormat = "dd.MM.yyyy"
 			dateOfBirthView.textField.text = dateFormatter.string(from: date)
 		}
 		genderView.textField.text = gender
