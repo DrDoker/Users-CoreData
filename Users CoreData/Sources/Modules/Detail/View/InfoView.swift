@@ -11,6 +11,7 @@ class InfoView: UIView {
 	
 	lazy var icon: UIImageView = {
 		let imageView = UIImageView()
+		imageView.clipsToBounds = true
 		imageView.contentMode = .scaleAspectFit
 		return imageView
 	}()
@@ -18,8 +19,10 @@ class InfoView: UIView {
 	lazy var textField: UITextField = {
 		let textField = UITextField()
 		textField.backgroundColor = .systemBackground
-		textField.layer.cornerRadius = 14
-		textField.textAlignment = .center
+		textField.layer.cornerRadius = 8
+		textField.textAlignment = .left
+		textField.leftView = UIView.init(frame: CGRectMake(0, 0, 14, 20))
+		textField.leftViewMode = .always
 		textField.isEnabled = false
 		return textField
 	}()
@@ -33,7 +36,7 @@ class InfoView: UIView {
 	lazy var stackView: UIStackView = {
 		let stack = UIStackView()
 		stack.axis = .horizontal
-		stack.spacing = 20
+		stack.spacing = 10
 		return stack
 	}()
 	
@@ -73,7 +76,7 @@ class InfoView: UIView {
 		}
 		
 		icon.snp.makeConstraints { make in
-			make.height.width.equalTo(30)
+			make.width.equalTo(30)
 		}
 		
 		lineView.snp.makeConstraints { make in
