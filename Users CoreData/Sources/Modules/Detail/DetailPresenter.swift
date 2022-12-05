@@ -8,11 +8,12 @@
 import Foundation
 
 protocol DetailViewProtocol: AnyObject {
-	
+	func setupDetailedView(name: String?, dateOfBirth: Date?, gender: String?, image: Data?)
 }
 
 protocol DetailPresenterProtocol: AnyObject {
-	func getName() -> String
+	func setData()
+	func updateData(name: String?, dateOfBirth: Date?, gender: String?, image: Data?)
 }
 
 class DetailPresenter: DetailPresenterProtocol {
@@ -26,8 +27,16 @@ class DetailPresenter: DetailPresenterProtocol {
 		self.router = router
 	}
 	
-	func getName() -> String {
-		return user.name ?? ""
+	func setData() {
+		view?.setupDetailedView(name: user.name, dateOfBirth: user.dateOfBirth, gender: user.gender, image: user.image)
+	}
+	
+	func updateData(name: String?, dateOfBirth: Date?, gender: String?, image: Data?) {
+		self.user.name = name
+		self.user.dateOfBirth = dateOfBirth
+		self.user.gender = gender
+		self.user.image = image
+		CoreDataService.shared.saveContext()
 	}
 
 }
